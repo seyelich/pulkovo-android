@@ -30,7 +30,7 @@ import {
 } from './utils/store'
 import type { TContextStop, TContextMedia, TContextRoute } from './utils/store'
 
-const REACT_APP_ICONS_URL = 'http://192.168.100.194:8080/'
+const { EXPO_PUBLIC_ICONS_URL } = process.env
 
 const App = () => {
 	const [allStops, setAllStops] = useState<TFullStop[]>([])
@@ -90,7 +90,7 @@ const App = () => {
 
 	// useEffect(() => {
 	// 	setRoute({
-	// 		icon: REACT_APP_ICONS_URL + mockRoute.icon,
+	// 		icon: EXPO_PUBLIC_ICONS_URL + mockRoute.icon,
 	// 		color: mockRoute.color,
 	// 		fontColor: mockRoute.fontColor,
 	// 		name: mockRoute.name
@@ -117,7 +117,7 @@ const App = () => {
 
 	useEffect(() => {
 		if (readyState === ReadyState.CONNECTING) setIsLoading(true)
-		if (!lastJsonMessage || !REACT_APP_ICONS_URL) return
+		if (!lastJsonMessage || !EXPO_PUBLIC_ICONS_URL) return
 		const { icon, color, fontColor, stops } = lastJsonMessage as TRoute
 		const { index } = lastJsonMessage as TStopStart
 		const { speed } = lastJsonMessage as TSpeed
@@ -128,7 +128,7 @@ const App = () => {
 			case 'ROUTE':
 				setAllStops(stops)
 				setRoute({
-					icon: REACT_APP_ICONS_URL + icon,
+					icon: EXPO_PUBLIC_ICONS_URL + icon,
 					color,
 					fontColor,
 					name:
@@ -169,7 +169,7 @@ const App = () => {
 			case 'PLAY_IMAGE':
 				setType('media')
 				setMedia({
-					src: REACT_APP_ICONS_URL + src,
+					src: EXPO_PUBLIC_ICONS_URL + src,
 					label,
 					length,
 					type: 'img',
@@ -178,7 +178,7 @@ const App = () => {
 			case 'PLAY_VIDEO':
 				setType('media')
 				setMedia({
-					src: REACT_APP_ICONS_URL + src,
+					src: EXPO_PUBLIC_ICONS_URL + src,
 					label,
 					length,
 					type: 'video',
@@ -222,7 +222,7 @@ const App = () => {
 						duration,
 						color,
 						contents,
-						src: REACT_APP_ICONS_URL + src,
+						src: EXPO_PUBLIC_ICONS_URL + src,
 					})
 				}
 				break
