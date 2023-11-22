@@ -1,16 +1,20 @@
-import useLeftContext from '../hooks/useLeftContext';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native'
+
+import useLeftContext from '../hooks/useLeftContext'
 
 export const HeaderForRoute = () => {
-	const { route } = useLeftContext();
+	const { route } = useLeftContext()
 
 	return (
 		<View style={styles.header}>
-			<Image source={{uri: route.icon.length === 0 ? undefined : route.icon}} alt="route" />
+			<Image
+				source={{ uri: route.icon.length === 0 ? undefined : route.icon }}
+				alt="route"
+			/>
 			<Text style={styles.title}>{route.name}</Text>
 		</View>
-	);
-};
+	)
+}
 
 const styles = StyleSheet.create({
 	header: {
@@ -21,15 +25,15 @@ const styles = StyleSheet.create({
 		gap: 16,
 		boxSizing: 'border-box',
 		backgroundColor: 'inherit',
-		flexDirection: 'row'
+		flexDirection: 'row',
 	},
-	
+
 	title: {
 		fontSize: 28,
 		fontWeight: '700',
 		lineHeight: 42,
-	}
-	
+	},
+
 	// @media screen and (minWidth: 2782) {
 	// 	title {
 	// 		fontSize: 42,

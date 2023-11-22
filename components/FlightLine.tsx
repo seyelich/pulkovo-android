@@ -1,23 +1,32 @@
-import { TFlight } from '../types';
 import { StyleSheet, View, Text } from 'react-native'
+
+import type { TFlight } from '../types'
 
 export const FlightLine = ({ flight }: { flight: TFlight }) => {
 	const setStatusStyle = () => {
-		if (flight.status.includes('Задерживается')) return styles.statusRed;
-		else if (flight.status.includes('Прибыл')) return styles.statusGreen;
-	};
+		if (flight.status.includes('Задерживается')) return styles.statusRed
+		else if (flight.status.includes('Прибыл')) return styles.statusGreen
+	}
 
 	return (
 		<View style={styles.row}>
-			<Text style={[styles.textBold, styles.text, styles.time]}>{flight.time}</Text>
-			<Text style={[styles.textBold, styles.route, styles.text]}>{flight.flightNumber}</Text>
+			<Text style={[styles.textBold, styles.text, styles.time]}>
+				{flight.time}
+			</Text>
+			<Text style={[styles.textBold, styles.route, styles.text]}>
+				{flight.flightNumber}
+			</Text>
 			<Text style={[styles.direction, styles.text]}>{flight.direction}</Text>
 			<Text style={[styles.company, styles.text]}>{flight.airline}</Text>
-			<Text style={[styles.textBold, styles.text, styles.aircraftType]}>{flight.aircraftType}</Text>
-			<View style={[styles.status, setStatusStyle()]}><Text style={styles.statusText}>{flight.status}</Text></View>
+			<Text style={[styles.textBold, styles.text, styles.aircraftType]}>
+				{flight.aircraftType}
+			</Text>
+			<View style={[styles.status, setStatusStyle()]}>
+				<Text style={styles.statusText}>{flight.status}</Text>
+			</View>
 		</View>
-	);
-};
+	)
+}
 
 const styles = StyleSheet.create({
 	row: {
@@ -29,23 +38,23 @@ const styles = StyleSheet.create({
 
 	time: {
 		paddingVertical: 19,
-		paddingHorizontal: 7
+		paddingHorizontal: 7,
 	},
 
 	text: {
 		fontSize: 26,
 		lineHeight: 26,
 		display: 'flex',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
-	
+
 	textBold: {
 		fontWeight: '700',
 		textAlign: 'center',
 		display: 'flex',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
-	
+
 	route: {
 		backgroundColor: 'rgba(182, 229, 255, 1)',
 		marginVertical: 13,
@@ -55,14 +64,14 @@ const styles = StyleSheet.create({
 		color: 'rgba(0, 0, 0, 1)',
 		lineHeight: 38,
 	},
-	
+
 	direction: {
 		fontSize: 30,
 		fontWeight: '500',
 		lineHeight: 30,
 		width: 320,
 	},
-	
+
 	company: {
 		fontWeight: '500',
 		width: 160,
@@ -70,9 +79,9 @@ const styles = StyleSheet.create({
 
 	aircraftType: {
 		width: 100,
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
-	
+
 	statusText: {
 		fontSize: 22,
 		fontWeight: '500',
@@ -82,21 +91,20 @@ const styles = StyleSheet.create({
 	status: {
 		width: 180,
 		justifyContent: 'center',
-		paddingHorizontal: 8
+		paddingHorizontal: 8,
 	},
-	
+
 	statusRed: {
 		backgroundColor: '#ffcbcb',
 	},
-	
+
 	statusGreen: {
 		backgroundColor: '#c9ffd5',
 	},
-	
+
 	// @media screen and (minWidth: 2782px): {
 	// 	row td {
 	// 		height: 97px;
 	// 	},
 	// },
-	
 })

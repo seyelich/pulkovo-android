@@ -1,27 +1,26 @@
-import { StyleSheet, Text, View } from 'react-native';
-import useLeftContext from '../hooks/useLeftContext';
+import { StyleSheet, Text, View } from 'react-native'
+
+import useLeftContext from '../hooks/useLeftContext'
 
 export const Footer = () => {
-	const { speed, temperature } = useLeftContext();
+	const { speed, temperature } = useLeftContext()
 
 	const getTime = () => {
-		const date = new Date();
+		const date = new Date()
 
-		const writeCorrect = (str: number) => {
-			return str <= 9 ? `0${str}` : str;
-		};
+		const writeCorrect = (str: number) => (str <= 9 ? `0${str}` : str)
 
-		const hours = writeCorrect(date.getHours());
-		const minutes = writeCorrect(date.getMinutes());
-		const day = writeCorrect(date.getDate());
-		const month = writeCorrect(date.getMonth());
-		const year = date.getFullYear();
+		const hours = writeCorrect(date.getHours())
+		const minutes = writeCorrect(date.getMinutes())
+		const day = writeCorrect(date.getDate())
+		const month = writeCorrect(date.getMonth())
+		const year = date.getFullYear()
 
 		return {
 			time: `${hours}:${minutes}`,
 			date: `${day}.${month}.${year}`,
-		};
-	};
+		}
+	}
 
 	return (
 		<View style={styles.footer}>
@@ -31,9 +30,8 @@ export const Footer = () => {
 			{/* не показывается, т.к. пакет TEMPERATURE не приходит с бэка*/}
 			{speed !== 0 && <Text>{speed} км/ч</Text>}
 		</View>
-	);
-};
-
+	)
+}
 
 const styles = StyleSheet.create({
 	footer: {
@@ -57,6 +55,6 @@ const styles = StyleSheet.create({
 		backgroundColor: 'rgba(252, 249, 249, 1)',
 	},
 	text: {
-		color: 'rgba(62, 58, 107, 1)'
-	}
+		color: 'rgba(62, 58, 107, 1)',
+	},
 })

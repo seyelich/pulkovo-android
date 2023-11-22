@@ -1,39 +1,40 @@
-import { FlightLine } from './FlightLine';
-import useRightContext from '../hooks/useRightContext';
-import { useState, useEffect } from 'react';
-import { TFlight } from '../types';
+import { useState, useEffect } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import { ArrivalDepartureIcon } from './icons/ArrivalDepartureIcon';
+
+import { FlightLine } from './FlightLine'
+import { ArrivalDepartureIcon } from './icons/ArrivalDepartureIcon'
+import useRightContext from '../hooks/useRightContext'
+import type { TFlight } from '../types'
 
 export const FlightTable = () => {
-	const { contents, subtype, duration } = useRightContext().pulkovo;
-	const [chunkNumber, setChunkNumber] = useState(0);
+	const { contents, subtype, duration } = useRightContext().pulkovo
+	const [chunkNumber, setChunkNumber] = useState(0)
 
-	const flightLength = contents?.length;
-	const chunkSize = 7;
+	const flightLength = contents?.length
+	const chunkSize = 7
 	const arr =
 		flightLength && flightLength > chunkSize
 			? sliceIntoChunks(contents, chunkSize)
-			: [contents];
-	const tableShowDuration = arr && duration / arr.length;
-	const currTable = arr[chunkNumber];
+			: [contents]
+	const tableShowDuration = arr && duration / arr.length
+	const currTable = arr[chunkNumber]
 
 	function sliceIntoChunks(arr: TFlight[], chunkSize: number) {
-		const res = [];
+		const res = []
 		for (let i = 0; i < arr.length; i += chunkSize) {
-			const chunk = arr.slice(i, i + chunkSize);
-			res.push(chunk);
+			const chunk = arr.slice(i, i + chunkSize)
+			res.push(chunk)
 		}
-		return res;
+		return res
 	}
 
 	useEffect(() => {
 		const timer = setTimeout(
 			() => setChunkNumber((num) => num + 1),
-			tableShowDuration && tableShowDuration * 1000
-		);
-		return () => clearTimeout(timer);
-	}, [tableShowDuration]);
+			tableShowDuration && tableShowDuration * 1000,
+		)
+		return () => clearTimeout(timer)
+	}, [tableShowDuration])
 
 	return (
 		<View style={styles.content}>
@@ -56,8 +57,8 @@ export const FlightTable = () => {
 					currTable.map((el, i) => <FlightLine flight={el} key={i} />)}
 			</View>
 		</View>
-	);
-};
+	)
+}
 
 const styles = StyleSheet.create({
 	content: {
@@ -67,21 +68,21 @@ const styles = StyleSheet.create({
 		alignSelf: 'flex-start',
 		flex: 1,
 	},
-	
+
 	titleContainer: {
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 8,
 		paddingLeft: 13,
 	},
-	
+
 	title: {
 		fontSize: 26,
 		fontWeight: '700',
 		lineHeight: 26,
 		color: 'rgba(51, 71, 67, 1)',
 	},
-	
+
 	text: {
 		color: 'rgba(0, 25, 20, 1)',
 	},
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		paddingBottom: 14,
 	},
-	
+
 	headerText: {
 		fontSize: 20,
 		lineHeight: 20,
@@ -100,35 +101,35 @@ const styles = StyleSheet.create({
 		fontWeight: '500',
 		alignSelf: 'flex-end',
 	},
-	
+
 	time: {
 		width: 80,
-		textAlign: 'center'
+		textAlign: 'center',
 	},
-	
+
 	route: {
 		width: 120,
-		textAlign: 'center'
+		textAlign: 'center',
 	},
-	
+
 	direction: {
 		width: 320,
 	},
-	
+
 	company: {
 		width: 160,
 	},
-	
+
 	plane: {
 		width: 100,
-		textAlign: 'center'
+		textAlign: 'center',
 	},
-	
+
 	status: {
 		width: 180,
-		marginLeft: 8
+		marginLeft: 8,
 	},
-	
+
 	// @media screen and (maxWidth: 1920): {
 	// 	table {
 	// 		margin-top: -18,

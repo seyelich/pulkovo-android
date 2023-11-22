@@ -1,0 +1,70 @@
+{
+  "env": {
+    "es2023": true,
+    "node": true
+  },
+	"root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+		"plugin:react-hooks/recommended",
+    "prettier",
+		"universe/native"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+		"react-hooks",
+    "prettier"
+  ],
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports"
+      }
+    ],
+    "arrow-body-style": [
+      "error",
+      "as-needed"
+    ],
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "react/react-in-jsx-scope": "off",
+    "unicorn/prevent-abbreviations": "off",
+    "unicorn/no-useless-undefined": "off",
+    "unicorn/filename-case": "off",
+    "unicorn/no-null": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.json"
+      ],
+      "rules": {
+        "sonarjs/no-duplicate-string": "off"
+      }
+    }
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

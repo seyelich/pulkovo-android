@@ -1,8 +1,15 @@
-import { useEffect, useState, useMemo } from 'react';
-import { LeftBlock } from './components/LeftBlock';
-import { StatusBar, StyleSheet, View } from 'react-native';
-import useWebSocket, { ReadyState } from 'react-use-websocket';
-import {
+import { useEffect, useState, useMemo } from 'react'
+import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native'
+import useWebSocket, { ReadyState } from 'react-use-websocket'
+
+import test from './assets/test.jpg'
+import kartinka from './assets/картинка.jpg'
+import { LeftBlock } from './components/LeftBlock'
+import { RightBlock } from './components/RightBlock'
+import { pulkovoMock } from './mock/pulkovo'
+import { route as mockRoute } from './mock/route'
+import { stops as mockStops } from './mock/stops'
+import type {
 	TFullStop,
 	TMedia,
 	TPulkovo,
@@ -12,61 +19,52 @@ import {
 	TStopTimes,
 	TTemp,
 	TWsMessage,
-} from './types';
+} from './types'
+import { socketUrl } from './utils/constants'
 import {
 	LeftContext,
 	RightContext,
-	TContextStop,
-	TContextMedia,
-	TContextRoute,
 	RouteInitState,
 	MediaInitState,
 	PulkovoInitState,
-} from './utils/store';
-import { RightBlock } from './components/RightBlock';
-import { socketUrl } from './utils/constants';
-import { route as mockRoute }  from './mock/route';
-import { stops as mockStops }  from './mock/stops';
-import test from './assets/test.jpg'
-import kartinka from './assets/картинка.jpg'
-import { pulkovoMock } from './mock/pulkovo';
-import { ActivityIndicator } from 'react-native';
+} from './utils/store'
+import type { TContextStop, TContextMedia, TContextRoute } from './utils/store'
 
-const  REACT_APP_ICONS_URL  = 'http://192.168.100.194:8080/';
+const REACT_APP_ICONS_URL = 'http://192.168.100.194:8080/'
 
 const App = () => {
-	const [allStops, setAllStops] = useState<TFullStop[]>([]);
+	const [allStops, setAllStops] = useState<TFullStop[]>([])
 
-	const [route, setRoute] = useState<TContextRoute>(RouteInitState);
-	const [appStops, setAppStops] = useState<TContextStop[]>([]);
-	const [currStop, setCurrStop] = useState<TFullStop | undefined>();
-	const [appSpeed, setAppSpeed] = useState<number>(0);
-	const [appTemperature, setAppTemperature] = useState<number>(0);
+	const [route, setRoute] = useState<TContextRoute>(RouteInitState)
+	const [appStops, setAppStops] = useState<TContextStop[]>([])
+	const [currStop, setCurrStop] = useState<TFullStop | undefined>()
+	const [appSpeed, setAppSpeed] = useState<number>(0)
+	const [appTemperature, setAppTemperature] = useState<number>(0)
 
-	const [media, setMedia] = useState<TContextMedia>(MediaInitState);
-	const [pulkovo, setPulkovo] = useState<TPulkovo>(PulkovoInitState);
-	const [type, setType] = useState<'media' | 'pulkovo'>('media');
+	const [media, setMedia] = useState<TContextMedia>(MediaInitState)
+	const [pulkovo, setPulkovo] = useState<TPulkovo>(PulkovoInitState)
+	const [type, setType] = useState<'media' | 'pulkovo'>('media')
 
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(true)
 
 	const { lastJsonMessage, readyState, sendJsonMessage } =
 		useWebSocket<TWsMessage>(socketUrl, {
 			onError: (err) => {
-				setIsLoading(false);
+				setIsLoading(false)
 				console.log(err)
 			},
 			onClose: () => {
-				console.log('Connection closed');
-				setIsLoading(false);
+				console.log('Connection closed')
+				setIsLoading(false)
 			},
 			onOpen: () => {
-				console.log('Connection opened');
-				setIsLoading(false);
+				console.log('Connection opened')
+				setIsLoading(false)
 			},
 			shouldReconnect: () => true,
 			reconnectAttempts: 10,
 			reconnectInterval: 3000,
-		});
+		})
 
 	const leftContext = useMemo(
 		() => ({
@@ -76,8 +74,8 @@ const App = () => {
 			speed: appSpeed,
 			temperature: appTemperature,
 		}),
-		[route, appStops, currStop, appSpeed, appTemperature]
-	);
+		[route, appStops, currStop, appSpeed, appTemperature],
+	)
 
 	const rightContext = useMemo(
 		() => ({
@@ -85,10 +83,10 @@ const App = () => {
 			pulkovo,
 			type,
 		}),
-		[media, pulkovo, type]
-	);
+		[media, pulkovo, type],
+	)
 
-	// 
+	// use when server is not working
 
 	// useEffect(() => {
 	// 	setRoute({
@@ -96,40 +94,39 @@ const App = () => {
 	// 		color: mockRoute.color,
 	// 		fontColor: mockRoute.fontColor,
 	// 		name: mockRoute.name
-	// 	});
+	// 	})
 	// 	setAllStops(mockStops)
-		
+
 	// 	const stops = mockStops.slice(0, 4).map(el => ({
 	// 		...el,
 	// 		time: 1,
 	// 	}))
 
-	// 	setAppStops(stops);
+	// 	setAppStops(stops)
 	// 	setCurrStop(stops[0])
 
-	// 	setType('media');
+	// 	setType('media')
 	// 	setMedia({
 	// 		src: kartinka,
 	// 		label: '',
 	// 		length: 10,
 	// 		type: 'img',
-	// 	});
-	// 	setPulkovo(pulkovoMock)			
+	// 	})
+	// 	setPulkovo(pulkovoMock)
 	// }, [])
 
 	useEffect(() => {
-		if (readyState === ReadyState.CONNECTING) setIsLoading(true);
-		if (!lastJsonMessage || !REACT_APP_ICONS_URL) return;
-		const { icon, color, fontColor, stops } = lastJsonMessage as TRoute;
-		const { index } = lastJsonMessage as TStopStart;
-		const { speed } = lastJsonMessage as TSpeed;
-		const { temperature } = lastJsonMessage as TTemp;
+		if (readyState === ReadyState.CONNECTING) setIsLoading(true)
+		if (!lastJsonMessage || !REACT_APP_ICONS_URL) return
+		const { icon, color, fontColor, stops } = lastJsonMessage as TRoute
+		const { index } = lastJsonMessage as TStopStart
+		const { speed } = lastJsonMessage as TSpeed
+		const { temperature } = lastJsonMessage as TTemp
 		const { src, label, length, header, text, url, format } =
-			lastJsonMessage as TMedia;
-		
+			lastJsonMessage as TMedia
 		switch (lastJsonMessage.type) {
 			case 'ROUTE':
-				setAllStops(stops);
+				setAllStops(stops)
 				setRoute({
 					icon: REACT_APP_ICONS_URL + icon,
 					color,
@@ -138,122 +135,121 @@ const App = () => {
 						stops.length !== 0
 							? stops[0].nameRus + ' - ' + stops[stops.length - 1].nameRus
 							: '',
-				});
-				break;
+				})
+				break
 			case 'SPEED':
-				setAppSpeed(speed);
-				break;
+				setAppSpeed(speed)
+				break
 			case 'TEMPERATURE':
-				setAppTemperature(temperature);
-				break;
+				setAppTemperature(temperature)
+				break
 			case 'STOP_BEGIN':
-				setCurrStop(appStops?.find((el) => el.index === index));
-				break;
+				setCurrStop(appStops?.find((el) => el.index === index))
+				break
 			case 'STOP_END':
-				setCurrStop(undefined);
-				break;
+				setCurrStop(undefined)
+				break
 			case 'STOP_TIMES':
 				{
-					const stops = [];
+					const stops = []
 
 					for (const el of (lastJsonMessage as TStopTimes).stops) {
-						const stop = allStops.find((_, i) => i === el.index);
-						if (stop === undefined) return;
+						const stop = allStops.find((_, i) => i === el.index)
+						if (stop === undefined) return
 						else
 							stops.push({
 								time: el.time,
 								...stop,
-							});
+							})
 					}
 
-					setAppStops(stops);
+					setAppStops(stops)
 				}
-				break;
+				break
 			case 'PLAY_IMAGE':
-				setType('media');
+				setType('media')
 				setMedia({
 					src: REACT_APP_ICONS_URL + src,
 					label,
 					length,
 					type: 'img',
-				});
-				break;
+				})
+				break
 			case 'PLAY_VIDEO':
-				setType('media');
+				setType('media')
 				setMedia({
 					src: REACT_APP_ICONS_URL + src,
 					label,
 					length,
 					type: 'video',
-				});
-				break;
+				})
+				break
 			case 'PLAY_EMERGENCY':
-				setType('media');
+				setType('media')
 				setMedia({
-					header: header,
+					header,
 					text,
 					label,
 					length,
 					type: 'emergency',
-				});
-				break;
+				})
+				break
 			case 'PLAY_STREAM':
-				setType('media');
+				setType('media')
 				setMedia({
 					format,
 					url,
 					label,
 					length,
 					type: 'stream',
-				});
-				break;
+				})
+				break
 			case 'PLAY_TICKER':
-				setType('media');
+				setType('media')
 				setMedia({
 					text,
 					label,
 					type: 'ticker',
-				});
-				break;
+				})
+				break
 			case 'PULKOVO':
 				{
 					const { subtype, duration, color, contents, src } =
-						lastJsonMessage as TPulkovo;
-					setType('pulkovo');
+						lastJsonMessage as TPulkovo
+					setType('pulkovo')
 					setPulkovo({
 						subtype,
 						duration,
 						color,
 						contents,
 						src: REACT_APP_ICONS_URL + src,
-					});
+					})
 				}
-				break;
+				break
 		}
-	}, [lastJsonMessage]);
-	
+	}, [lastJsonMessage])
+
 	return (
-		<View style={[styles.app, isLoading && styles.appOnLoading]}> 
-		 	{
-				isLoading ? 
-					<ActivityIndicator size='large' />
-					: 
-					<>
-						<LeftContext.Provider value={leftContext}>
-							<LeftBlock />
-						</LeftContext.Provider>
-						<RightContext.Provider value={rightContext}>
-							<RightBlock sendMessage={sendJsonMessage} />
-						</RightContext.Provider>
-					</>
-			}
+		<View style={[styles.app, isLoading && styles.appOnLoading]}>
+			{isLoading ? (
+				<ActivityIndicator size="large" />
+			) : (
+				<>
+					<LeftContext.Provider value={leftContext}>
+						<LeftBlock />
+					</LeftContext.Provider>
+					<RightContext.Provider value={rightContext}>
+						<RightBlock sendMessage={sendJsonMessage} />
+					</RightContext.Provider>
+				</>
+			)}
 			<StatusBar />
 		</View>
-	);
+	)
 }
 
 const styles = StyleSheet.create({
-  app: {
+	app: {
 		width: '100%',
 		height: 540, //delete later
 		minWidth: 1920,
@@ -262,31 +258,31 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		overflow: 'hidden',
 	},
-	
+
 	appOnLoading: {
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-	
+
 	error: {
 		fontSize: 40,
 		fontWeight: '700',
 		lineHeight: 40,
 	},
-	
+
 	// /* for correct view on computer monitor. delete when deploy*/
-	
+
 	// @media screen and (maxWidth: 2782): {
 	// 	.app: {
 	// 		height: 768,
 	// 	},
 	// },
-	
+
 	// @media screen and (maxWidth: 1920): {
 	// 	.app: {
 	// 		height: 540,
 	// 	},
 	// },
-});
+})
 
-export default App;
+export default App
