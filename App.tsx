@@ -25,8 +25,14 @@ import {
 } from './utils/store';
 import { RightBlock } from './components/RightBlock';
 import { socketUrl } from './utils/constants';
+import { route as mockRoute }  from './mock/route';
+import { stops as mockStops }  from './mock/stops';
+import test from './assets/test.jpg'
+import kartinka from './assets/картинка.jpg'
+import { pulkovoMock } from './mock/pulkovo';
+import { ActivityIndicator } from 'react-native';
 
-const { REACT_APP_ICONS_URL } = process.env;
+const  REACT_APP_ICONS_URL  = 'http://192.168.100.194:8080/';
 
 const App = () => {
 	const [allStops, setAllStops] = useState<TFullStop[]>([]);
@@ -45,8 +51,9 @@ const App = () => {
 
 	const { lastJsonMessage, readyState, sendJsonMessage } =
 		useWebSocket<TWsMessage>(socketUrl, {
-			onError: () => {
+			onError: (err) => {
 				setIsLoading(false);
+				console.log(err)
 			},
 			onClose: () => {
 				console.log('Connection closed');
@@ -80,6 +87,35 @@ const App = () => {
 		}),
 		[media, pulkovo, type]
 	);
+
+	// 
+
+	// useEffect(() => {
+	// 	setRoute({
+	// 		icon: REACT_APP_ICONS_URL + mockRoute.icon,
+	// 		color: mockRoute.color,
+	// 		fontColor: mockRoute.fontColor,
+	// 		name: mockRoute.name
+	// 	});
+	// 	setAllStops(mockStops)
+		
+	// 	const stops = mockStops.slice(0, 4).map(el => ({
+	// 		...el,
+	// 		time: 1,
+	// 	}))
+
+	// 	setAppStops(stops);
+	// 	setCurrStop(stops[0])
+
+	// 	setType('media');
+	// 	setMedia({
+	// 		src: kartinka,
+	// 		label: '',
+	// 		length: 10,
+	// 		type: 'img',
+	// 	});
+	// 	setPulkovo(pulkovoMock)			
+	// }, [])
 
 	useEffect(() => {
 		if (readyState === ReadyState.CONNECTING) setIsLoading(true);
@@ -195,22 +231,22 @@ const App = () => {
 				break;
 		}
 	}, [lastJsonMessage]);
-	console.log(isLoading)
-	// {`${styles.app} ${isLoading && styles.appOnLoading}`}
+	
 	return (
-		<View style={styles.app}> 
-			{isLoading ? (
-				<View style={styles.loader} />
-			) : (
-				<>
-					<LeftContext.Provider value={leftContext}>
-						<LeftBlock />
-					</LeftContext.Provider>
-					{/* <RightContext.Provider value={rightContext}>
-						<RightBlock sendMessage={sendJsonMessage} />
-					</RightContext.Provider> */}
-				</>
-			)}
+		<View style={[styles.app, isLoading && styles.appOnLoading]}> 
+		 	{
+				isLoading ? 
+					<ActivityIndicator size='large' />
+					: 
+					<>
+						<LeftContext.Provider value={leftContext}>
+							<LeftBlock />
+						</LeftContext.Provider>
+						<RightContext.Provider value={rightContext}>
+							<RightBlock sendMessage={sendJsonMessage} />
+						</RightContext.Provider>
+					</>
+			}
 			<StatusBar />
 		</View>
 	);
@@ -219,13 +255,11 @@ const App = () => {
 const styles = StyleSheet.create({
   app: {
 		width: '100%',
-		// height: '100vh',
-		// minWidth: 1920,
+		height: 540, //delete later
+		minWidth: 1920,
 		marginVertical: 0,
 		marginHorizontal: 'auto',
-		// flexDirection: 'row',
-		// display: grid,
-		// grid-templateColumns: repeat(2, 50%),
+		flexDirection: 'row',
 		overflow: 'hidden',
 	},
 	
@@ -234,38 +268,11 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	
-	loader: {
-		width: 80,
-		height: 80,
-	},
-	
-	// loader:after: {
-	// 	content: ' ',
-	// 	display: block,
-	// 	width: 64,
-	// 	height: 64,
-	// 	margin: 8,
-	// 	border-radius: 50%,
-	// 	border: 6 solid rgba(182, 229, 255, 1),
-	// 	borderColor: rgba(182, 229, 255, 1) transparent rgba(182, 229, 255, 1)
-	// 		transparent,
-	// 	animation: loader 1.2s linear infinite,
-	// },
-	
 	error: {
 		fontSize: 40,
 		fontWeight: '700',
 		lineHeight: 40,
 	},
-	
-	// @keyframes loader: {
-	// 	0%: {
-	// 		transform: rotate(0deg),
-	// 	},
-	// 	100%: {
-	// 		transform: rotate(360deg),
-	// 	},
-	// },
 	
 	// /* for correct view on computer monitor. delete when deploy*/
 	

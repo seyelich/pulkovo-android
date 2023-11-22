@@ -4,22 +4,21 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export const HeaderForStop = () => {
 	const { currStop, route } = useLeftContext();
-	const ref = useRef<HTMLDivElement>(null);
+	const ref = useRef<View>(null);
 	const container = ref.current;
 
-	const isOverflown = (el: HTMLDivElement) => el.scrollWidth > el.clientWidth;
-	const condition = container && isOverflown(container);
+	// const isOverflown = (el: View) => el.scrollWidth > el.clientWidth;
+	// const condition = container && isOverflown(container);
 
 	return (
 		<View
-			style={styles.header}
-			// style={{ backgroundColor: route.color, color: route.fontColor }}
-			// ref={ref}
+			style={[styles.header, { backgroundColor: route.color }]}
+			ref={ref}
 		>
-			<Text style={styles.title}> {/*{`${styles.title} ${condition && styles.runningLine}`} */}
+			<Text style={[styles.title, { color: route.fontColor }]}> {/*{`${styles.title} ${condition && styles.runningLine}`} */}
 				{currStop?.nameRus}
 			</Text>
-			<Text style={styles.titleEng}> {/*{`${styles.titleEng} ${condition && styles.runningLine}`} */}
+			<Text style={[styles.titleEng, { color: route.fontColor }]}> {/*{`${styles.titleEng} ${condition && styles.runningLine}`} */}
 				{currStop?.nameEng}
 			</Text>
 		</View>
@@ -30,12 +29,9 @@ const styles = StyleSheet.create({
 	header: {
 		paddingHorizontal: 32,
 		paddingVertical: 10,
-		// boxSizing: 'border-box',
-		// height: 'min-content',
-		// whiteSpace: 'nowrap',
+		boxSizing: 'border-box',
+		whiteSpace: 'nowrap',
 		overflow: 'hidden',
-		// backgroundColor: route.color, 
-		// color: route.fontColor,
 	},
 	
 	title: {

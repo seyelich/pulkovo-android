@@ -25,9 +25,9 @@ export const Footer = () => {
 
 	return (
 		<View style={styles.footer}>
-			<Text>{getTime().time}</Text>
-			<Text>{getTime().date}</Text>
-			{temperature !== 0 && <Text>{temperature}°C</Text>}
+			<Text style={styles.text}>{getTime().time}</Text>
+			<Text style={styles.text}>{getTime().date}</Text>
+			{temperature !== 0 && <Text style={styles.text}>{temperature}°C</Text>}
 			{/* не показывается, т.к. пакет TEMPERATURE не приходит с бэка*/}
 			{speed !== 0 && <Text>{speed} км/ч</Text>}
 		</View>
@@ -56,4 +56,7 @@ const styles = StyleSheet.create({
 		fontWeight: 500,
 		backgroundColor: 'rgba(252, 249, 249, 1)',
 	},
+	text: {
+		color: 'rgba(62, 58, 107, 1)'
+	}
 })

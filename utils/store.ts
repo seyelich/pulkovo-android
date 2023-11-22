@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 import { TFullStop, TMedia, TPulkovo } from '../types';
 import { pulkovoSubtypes, rightContentTypes } from './constants';
+import { route } from '../mock/route';
 
 export type TContextStop = TFullStop & { time: number };
 
@@ -35,7 +36,7 @@ export const RouteInitState = {
 };
 
 export const LeftInitState = {
-	route: RouteInitState,
+	route: route,
 	speed: 0,
 	temperature: 0,
 	currStop: undefined,

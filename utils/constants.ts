@@ -1,5 +1,5 @@
 // const { REACT_APP_WS_IP } = process.env;
-const REACT_APP_WS_IP = '192.168.100.95:23245'
+const REACT_APP_WS_IP = '192.168.100.194:23245'
 export const socketUrl = `ws://${REACT_APP_WS_IP}`;
 export const pulkovoSubtypes = {
 	ARRIVAL: 'ARRIVAL',

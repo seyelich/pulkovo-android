@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
-// import { FlightTable } from '../FlightsTable/FlightsTable';
+import { useEffect } from 'react';
+import { FlightTable } from './FlightsTable';
 import { SendJsonMessage } from 'react-use-websocket/dist/lib/types';
 import useRightContext from '../hooks/useRightContext';
-// import { MediaContent } from '../MediaContent/MediaContent';
+import { MediaContent } from './MediaContent';
 import { StyleSheet, View, Image } from 'react-native';
 
 export const RightBlock = ({
@@ -11,7 +11,6 @@ export const RightBlock = ({
 	sendMessage: SendJsonMessage;
 }) => {
 	const { media, pulkovo, type } = useRightContext();
-	const nodeRef = useRef<HTMLDivElement>(null);
 
 	const timer = (label: string, duration: number) =>
 		setTimeout(() => {
@@ -26,41 +25,28 @@ export const RightBlock = ({
 		const contentTimer =
 			type === 'pulkovo'
 				? timer(pulkovo.subtype, pulkovo.duration)
-				: timer(media.label, media.length);
+				: timer(media.label, media.length!);
 		return () => clearTimeout(contentTimer);
 	}, [pulkovo, media, type]);
 
 	return (
-		// <SwitchTransition mode="out-in">
-		// 	<CSSTransition
-		// 		classNames={{
-		// 			enter: styles.rightBlockEnter,
-		// 			enterActive: styles.rightBlockEnterActive,
-		// 			exit: styles.rightBlockExit,
-		// 			exitActive: styles.rightBlockExitActive,
-		// 		}}
-		// 		nodeRef={nodeRef}
-		// 		timeout={1000}
-		// 		key={type + media.src + pulkovo.subtype}
-		// 	>
-				<View style={styles.rightBlock}> {/* ref={nodeRef} */}
-					{/* {type === 'media' ? (
-						<MediaContent />
-					) : pulkovo.subtype === 'ARRIVAL' ||
-					  pulkovo.subtype === 'DEPARTURE' ? (
-						<FlightTable />
-					) : (
-						<View style={styles.imageContainer}>
-							<Image
-								style={styles.image}
-								source={pulkovo.src}
-								alt={pulkovo.subtype}
-							/>
-						</View>
-					)} */}
+		<View style={styles.rightBlock}>
+			{type === 'media' ? (
+				<MediaContent />
+			) : pulkovo.subtype === 'ARRIVAL' ||
+				pulkovo.subtype === 'DEPARTURE' ? (
+				<FlightTable />
+			) : (
+				<View style={styles.imageContainer}>
+					<Image
+						style={styles.image}
+						source={{uri: pulkovo.src}}
+						alt={pulkovo.subtype}
+						resizeMode='contain'
+					/>
 				</View>
-		// 	</CSSTransition>
-		// </SwitchTransition>
+			)}
+		</View>
 	);
 };
 
@@ -69,37 +55,15 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		overflow: 'hidden',
+		flex: 1
 	},
-	
-	rightBlockEnter: {
-		opacity: 0,
-	},
-
-	rightBlockExit: {
-		opacity: 1,
-	},
-
-	rightBlockEnterActive: {
-		opacity: 1,
-	},
-
-	rightBlockExitActive: {
-		opacity: 0,
-	},
-
-	// rightBlockEnterActive,
-	// rightBlockExitActive: {
-	// 	transition: opacity 1000ms,
-	// },
 	
 	imageContainer: {
-		alignItems: 'center',
-		justifyContent: 'center',
-		width: '100%',
+		flex: 1,
+		width: '100%'
 	},
-	
+
 	image: {
-		width: '100%',
-		// objectFit: 'contain',
-	},
+		flex: 1,
+	}
 })

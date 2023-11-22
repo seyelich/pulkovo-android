@@ -6,7 +6,7 @@ export const HeaderForRoute = () => {
 
 	return (
 		<View style={styles.header}>
-			<Image source={route.icon} alt="route" />
+			<Image source={{uri: route.icon.length === 0 ? undefined : route.icon}} alt="route" />
 			<Text style={styles.title}>{route.name}</Text>
 		</View>
 	);
@@ -16,10 +16,12 @@ const styles = StyleSheet.create({
 	header: {
 		paddingVertical: 7,
 		paddingHorizontal: 10,
-		borderbottom: '2 solid #d9d9d9',
+		borderBottomWidth: 2,
+		borderBottomColor: '#d9d9d9',
 		gap: 16,
 		boxSizing: 'border-box',
 		backgroundColor: 'inherit',
+		flexDirection: 'row'
 	},
 	
 	title: {
