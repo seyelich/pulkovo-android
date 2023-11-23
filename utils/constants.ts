@@ -1,4 +1,5 @@
 import { WS_IP } from '@env'
+import { Dimensions } from 'react-native'
 
 export const socketUrl = `ws://${WS_IP}`
 
@@ -20,3 +21,6 @@ export const Fonts = {
 	ptRootUi500: 'pt-root-ui-medium',
 	ptRootUi600: 'pt-root-ui-bold',
 }
+
+export const deviceWidth = Dimensions.get('window').width
+export const gap = deviceWidth >= 2782 ? 48 : 16

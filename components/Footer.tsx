@@ -29,14 +29,14 @@ export const Footer = () => {
 			<Text style={styles.text}>{getTime().date}</Text>
 			{temperature !== 0 && <Text style={styles.text}>{temperature}°C</Text>}
 			{/* не показывается, т.к. пакет TEMPERATURE не приходит с бэка*/}
-			{speed !== 0 && <Text>{speed} км/ч</Text>}
+			{speed !== 0 && <Text style={styles.text}>{speed} км/ч</Text>}
 		</View>
 	)
 }
 
 const styles = StyleSheet.create({
 	footer: {
-		width: 347,
+		width: '37.5%',
 		position: 'absolute',
 		flexDirection: 'row',
 		bottom: 8,

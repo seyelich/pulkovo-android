@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 import { CircleImage } from './icons/CircleImage'
 import useLeftContext from '../hooks/useLeftContext'
-import { Colors, Fonts } from '../utils/constants'
+import { Colors, Fonts, deviceWidth, gap } from '../utils/constants'
 import type { TContextStop } from '../utils/store'
 
 type TStopTemplate = {
@@ -15,7 +15,7 @@ export const StopTemplate = ({ stop, isFinal, isFirst }: TStopTemplate) => {
 	const { route } = useLeftContext()
 
 	return (
-		<View style={styles.stop}>
+		<View style={[styles.stop, isFinal && { marginBottom: 0 }]}>
 			<View>
 				<Text style={styles.timeText}>{stop.time}</Text>
 				<Text style={[styles.timeText, styles.minute]}>мин</Text>
@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
 	stop: {
 		alignItems: 'center',
 		flexDirection: 'row',
-		marginBottom: 16,
+		marginBottom: gap,
+		width: '69%',
 	},
 
 	timeText: {
@@ -77,15 +78,15 @@ const styles = StyleSheet.create({
 	},
 
 	name: {
-		fontSize: 32,
+		fontSize: deviceWidth >= 2782 ? 48 : 32,
 		fontFamily: Fonts.ptRootUi500,
-		lineHeight: 32,
+		lineHeight: deviceWidth >= 2782 ? 48 : 32,
 	},
 
 	nameEng: {
-		fontSize: 24,
+		fontSize: deviceWidth >= 2782 ? 32 : 24,
 		fontFamily: Fonts.ptRootUi500,
-		lineHeight: 24,
+		lineHeight: deviceWidth >= 2782 ? 32 : 24,
 		marginTop: 4,
 	},
 
@@ -95,16 +96,4 @@ const styles = StyleSheet.create({
 		lineHeight: 18,
 		marginTop: 16,
 	},
-
-	// @media screen and (minWidth: 2782): {
-	// 	.name: {
-	// 		fontSize: 48;
-	// 		lineHeight: 48;
-	// 	}
-
-	// 	.nameEng: {
-	// 		fontSize: 32;
-	// 		lineHeight: 32;
-	// 	}
-	// }
 })

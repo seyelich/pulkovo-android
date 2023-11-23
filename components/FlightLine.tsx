@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text } from 'react-native'
 
 import type { TFlight } from '../types'
-import { Colors, Fonts } from '../utils/constants'
+import { Colors, Fonts, deviceWidth } from '../utils/constants'
 
 export const FlightLine = ({ flight }: { flight: TFlight }) => {
 	const setStatusStyle = () => {
@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
 		borderBottomColor: Colors.lightGrey,
 		borderBottomWidth: 1,
 		flexDirection: 'row',
-		height: 64,
+		height: deviceWidth >= 2782 ? 105 : 64,
+		// justifyContent: deviceWidth >= 2782 ? 'space-between' : 'flex-start',
 	},
 
 	time: {
@@ -43,8 +44,8 @@ const styles = StyleSheet.create({
 	},
 
 	text: {
-		fontSize: 26,
-		lineHeight: 26,
+		fontSize: deviceWidth >= 2782 ? 48 : 26,
+		lineHeight: deviceWidth >= 2782 ? 48 : 26,
 		display: 'flex',
 		alignItems: 'center',
 		fontFamily: Fonts.ptRootUi500,
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
 		marginVertical: 13,
 		marginHorizontal: 8,
 		justifyContent: 'center',
-		width: 104,
+		minWidth: 104,
 		color: Colors.routeBlack,
 		lineHeight: 38,
 	},
@@ -70,28 +71,32 @@ const styles = StyleSheet.create({
 	direction: {
 		fontSize: 30,
 		lineHeight: 30,
-		width: 320,
+		minWidth: 320,
+		marginLeft: deviceWidth >= 2782 ? 10 : 0,
 	},
 
 	company: {
-		width: 160,
+		minWidth: 160,
+		marginLeft: deviceWidth >= 2782 ? 50 : 0,
 	},
 
 	aircraftType: {
-		width: 100,
+		minWidth: 100,
 		justifyContent: 'center',
+		marginLeft: deviceWidth >= 2782 ? 90 : 0,
 	},
 
 	statusText: {
-		fontSize: 22,
-		lineHeight: 22,
+		fontSize: deviceWidth >= 2782 ? 40 : 22,
+		lineHeight: deviceWidth >= 2782 ? 40 : 22,
 		fontFamily: Fonts.ptRootUi500,
 	},
 
 	status: {
-		width: 180,
+		flex: 1,
 		justifyContent: 'center',
 		paddingHorizontal: 8,
+		marginLeft: deviceWidth >= 2782 ? 50 : 0,
 	},
 
 	statusRed: {
@@ -101,10 +106,4 @@ const styles = StyleSheet.create({
 	statusGreen: {
 		backgroundColor: Colors.green,
 	},
-
-	// @media screen and (minWidth: 2782px): {
-	// 	row td {
-	// 		height: 97px;
-	// 	},
-	// },
 })

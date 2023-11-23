@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { StopTemplate } from './StopTemplate'
 import useLeftContext from '../hooks/useLeftContext'
-import { Colors, Fonts } from '../utils/constants'
+import { Colors, Fonts, deviceWidth, gap } from '../utils/constants'
 import type { TContextStop } from '../utils/store'
 
 export const Stops = () => {
@@ -41,11 +41,17 @@ export const Stops = () => {
 			/>
 			{stops.length < 4 || !!currStop ? (
 				<View
-					style={[styles.line, { height: index * 92 + (index - 2) * gap }]}
+					style={[
+						styles.line,
+						{
+							height:
+								index * (deviceWidth >= 2782 ? 116 : 92) + (index - 2) * gap,
+						},
+					]}
 				/>
 			) : (
 				<>
-					<View style={[styles.line, { height: '100%' }]} />
+					<View style={styles.line} />
 					<LinearGradient
 						colors={['#d9d9d9', '#fff']}
 						style={styles.gradientLine}
@@ -56,14 +62,11 @@ export const Stops = () => {
 	)
 }
 
-const gap = 16
-
 const styles = StyleSheet.create({
 	stops: {
-		position: 'relative',
 		margin: 0,
 		paddingHorizontal: 17.5,
-		paddingBottom: 18,
+		paddingBottom: deviceWidth >= 2782 ? 32 : 18,
 		paddingTop: 16,
 		flexDirection: 'column',
 		flex: 1,
@@ -96,11 +99,4 @@ const styles = StyleSheet.create({
 		top: 0,
 		zIndex: -1,
 	},
-
-	// @media screen and (min-width: 2782) {
-	// 	.stops {
-	// 		--gap: 48;
-	// 		padding: 32 17.5 32 17.5;
-	// 	}
-	// }
 })

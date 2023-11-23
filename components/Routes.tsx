@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, FlatList, Image } from 'react-native'
 
 import useLeftContext from '../hooks/useLeftContext'
 import type { TTransfer } from '../types'
-import { Fonts } from '../utils/constants'
+import { Fonts, deviceWidth } from '../utils/constants'
 
 export const Routes = () => {
 	const { currStop, stops } = useLeftContext()
@@ -93,15 +93,15 @@ const styles = StyleSheet.create({
 	},
 
 	station: {
-		fontSize: 32,
+		fontSize: deviceWidth >= 2782 ? 60 : 32,
 		fontFamily: Fonts.ptRootUi600,
-		lineHeight: 32,
+		lineHeight: deviceWidth >= 2782 ? 60 : 32,
 	},
 
 	stationEng: {
-		fontSize: 16,
+		fontSize: deviceWidth >= 2782 ? 30 : 16,
 		fontFamily: Fonts.ptRootUi500,
-		lineHeight: 16,
+		lineHeight: deviceWidth >= 2782 ? 30 : 16,
 	},
 
 	icon: {

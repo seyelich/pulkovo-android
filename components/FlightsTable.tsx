@@ -5,7 +5,7 @@ import { FlightLine } from './FlightLine'
 import { ArrivalDepartureIcon } from './icons/ArrivalDepartureIcon'
 import useRightContext from '../hooks/useRightContext'
 import type { TFlight } from '../types'
-import { Colors, Fonts } from '../utils/constants'
+import { Colors, Fonts, deviceWidth } from '../utils/constants'
 
 export const FlightTable = () => {
 	const { contents, subtype, duration } = useRightContext().pulkovo
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
 		borderLeftWidth: 2,
 		alignSelf: 'flex-start',
 		flex: 1,
+		width: '100%',
 	},
 
 	titleContainer: {
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
 	},
 
 	title: {
-		fontSize: 26,
+		fontSize: deviceWidth >= 2782 ? 52 : 26,
 		fontFamily: Fonts.ptRootUi600,
 		lineHeight: 26,
 		color: Colors.darkGrey,
@@ -89,47 +90,44 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 2,
 		flexDirection: 'row',
 		paddingBottom: 14,
+		justifyContent: deviceWidth >= 2782 ? 'space-around' : 'flex-start',
 	},
 
 	headerText: {
-		fontSize: 20,
-		lineHeight: 20,
+		fontSize: deviceWidth >= 2782 ? 32 : 20,
+		lineHeight: deviceWidth >= 2782 ? 32 : 20,
 		color: Colors.darkGrey,
 		fontFamily: Fonts.ptRootUi500,
 		alignSelf: 'flex-end',
 	},
 
 	time: {
-		width: 80,
+		minWidth: 80,
 		textAlign: 'center',
 	},
 
 	route: {
-		width: 120,
+		minWidth: 120,
 		textAlign: 'center',
 	},
 
 	direction: {
-		width: 320,
+		minWidth: 320,
 	},
 
 	company: {
-		width: 160,
+		minWidth: 160,
+		marginLeft: deviceWidth >= 2782 ? -100 : 0,
 	},
 
 	plane: {
-		width: 100,
+		width: deviceWidth >= 2782 ? 150 : 100,
 		textAlign: 'center',
+		marginLeft: deviceWidth >= 2782 ? -25 : 0,
 	},
 
 	status: {
-		width: 180,
+		minWidth: 180,
 		marginLeft: 8,
 	},
-
-	// @media screen and (maxWidth: 1920): {
-	// 	table {
-	// 		margin-top: -18,
-	// 	},
-	// },
 })

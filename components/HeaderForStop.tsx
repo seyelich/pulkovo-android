@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 import useLeftContext from '../hooks/useLeftContext'
-import { Fonts } from '../utils/constants'
+import { Fonts, deviceWidth } from '../utils/constants'
 
 export const HeaderForStop = () => {
 	const { currStop, route } = useLeftContext()
@@ -31,20 +31,20 @@ export const HeaderForStop = () => {
 const styles = StyleSheet.create({
 	header: {
 		paddingHorizontal: 32,
-		paddingVertical: 10,
+		paddingVertical: deviceWidth >= 2782 ? 15 : 10,
 		boxSizing: 'border-box',
 		whiteSpace: 'nowrap',
 		overflow: 'hidden',
 	},
 
 	title: {
-		fontSize: 40,
-		lineHeight: 40,
+		fontSize: deviceWidth > 1920 ? 80 : 40,
+		lineHeight: deviceWidth > 1920 ? 80 : 40,
 		fontFamily: Fonts.ptRootUi600,
 	},
 
 	titleEng: {
-		fontSize: 28,
+		fontSize: deviceWidth >= 2782 ? 42 : 28,
 		fontFamily: Fonts.ptRootUi500,
 		lineHeight: 42,
 	},
@@ -52,18 +52,6 @@ const styles = StyleSheet.create({
 	runningLine: {
 		// animation: 5s line linear infinite,
 	},
-
-	// @media screen and (minWidth: 2782) {
-	// 	.title {
-	// 		font-size: 52;
-	// 		lineHeight: 52;
-	// 	}
-
-	// 	.titleEng {
-	// 		font-size: 42;
-	// 		lineHeight: 42;
-	// 	}
-	// }
 
 	// /* change animation */
 

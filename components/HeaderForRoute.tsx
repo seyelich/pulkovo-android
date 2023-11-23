@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 
 import useLeftContext from '../hooks/useLeftContext'
-import { Colors, Fonts } from '../utils/constants'
+import { Colors, Fonts, deviceWidth } from '../utils/constants'
 
 export const HeaderForRoute = () => {
 	const { route } = useLeftContext()
@@ -30,15 +30,8 @@ const styles = StyleSheet.create({
 	},
 
 	title: {
-		fontSize: 28,
+		fontSize: deviceWidth >= 2782 ? 42 : 28,
 		fontFamily: Fonts.ptRootUi600,
-		lineHeight: 42,
+		lineHeight: deviceWidth >= 2782 ? 80 : 42,
 	},
-
-	// @media screen and (minWidth: 2782) {
-	// 	title {
-	// 		fontSize: 42,
-	// 		lineHeight: 80,
-	// 	}
-	// }
 })

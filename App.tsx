@@ -1,7 +1,7 @@
 import { ICONS_URL } from '@env'
 import { useFonts } from 'expo-font'
 import { useEffect, useState, useMemo } from 'react'
-import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 
 import test from './assets/test.jpg'
@@ -22,7 +22,7 @@ import type {
 	TTemp,
 	TWsMessage,
 } from './types'
-import { socketUrl } from './utils/constants'
+import { deviceWidth, socketUrl } from './utils/constants'
 import {
 	LeftContext,
 	RightContext,
@@ -47,7 +47,7 @@ const App = () => {
 	const [pulkovo, setPulkovo] = useState<TPulkovo>(PulkovoInitState)
 	const [type, setType] = useState<'media' | 'pulkovo'>('media')
 
-	const [isLoading, setIsLoading] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
 
 	useFonts({
 		'pt-root-ui': require('./assets/fonts/PT-Root-UI/pt-root-ui_regular.ttf'),
@@ -251,7 +251,6 @@ const App = () => {
 					</RightContext.Provider>
 				</>
 			)}
-			<StatusBar />
 		</View>
 	)
 }
@@ -259,7 +258,7 @@ const App = () => {
 const styles = StyleSheet.create({
 	app: {
 		width: '100%',
-		height: 540, //delete later
+		height: deviceWidth > 1920 ? 768 : 540, //delete when prod
 		minWidth: 1920,
 		marginVertical: 0,
 		marginHorizontal: 'auto',
@@ -271,20 +270,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-
-	// /* for correct view on computer monitor. delete when deploy*/
-
-	// @media screen and (maxWidth: 2782): {
-	// 	.app: {
-	// 		height: 768,
-	// 	},
-	// },
-
-	// @media screen and (maxWidth: 1920): {
-	// 	.app: {
-	// 		height: 540,
-	// 	},
-	// },
 })
 
 export default App
