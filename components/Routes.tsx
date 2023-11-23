@@ -1,9 +1,9 @@
+import { ICONS_URL } from '@env'
 import { StyleSheet, View, Text, FlatList, Image } from 'react-native'
 
 import useLeftContext from '../hooks/useLeftContext'
 import type { TTransfer } from '../types'
-
-const { REACT_APP_ICONS_URL } = process.env
+import { Fonts } from '../utils/constants'
 
 export const Routes = () => {
 	const { currStop, stops } = useLeftContext()
@@ -15,14 +15,14 @@ export const Routes = () => {
 		index === 0 ? (
 			<Image
 				style={styles.icon}
-				source={{ uri: REACT_APP_ICONS_URL + icon }}
+				source={{ uri: ICONS_URL + icon }}
 				alt="Тип ТС"
 			/>
 		) : (
 			<View key={index}>
 				<Image
 					style={styles.icon}
-					source={{ uri: REACT_APP_ICONS_URL + icon }}
+					source={{ uri: ICONS_URL + icon }}
 					alt="Номер маршрута"
 				/>
 			</View>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 
 	finalStop: {
 		fontSize: 24,
-		fontWeight: '500',
+		fontFamily: Fonts.ptRootUi500,
 		lineHeight: 24,
 		marginBottom: 24,
 	},
@@ -94,13 +94,13 @@ const styles = StyleSheet.create({
 
 	station: {
 		fontSize: 32,
-		fontWeight: '700',
+		fontFamily: Fonts.ptRootUi600,
 		lineHeight: 32,
 	},
 
 	stationEng: {
 		fontSize: 16,
-		fontWeight: '500',
+		fontFamily: Fonts.ptRootUi500,
 		lineHeight: 16,
 	},
 

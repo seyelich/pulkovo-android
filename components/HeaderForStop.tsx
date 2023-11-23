@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 import useLeftContext from '../hooks/useLeftContext'
+import { Fonts } from '../utils/constants'
 
 export const HeaderForStop = () => {
 	const { currStop, route } = useLeftContext()
@@ -38,13 +39,13 @@ const styles = StyleSheet.create({
 
 	title: {
 		fontSize: 40,
-		fontWeight: '700',
 		lineHeight: 40,
+		fontFamily: Fonts.ptRootUi600,
 	},
 
 	titleEng: {
 		fontSize: 28,
-		fontWeight: '500',
+		fontFamily: Fonts.ptRootUi500,
 		lineHeight: 42,
 	},
 

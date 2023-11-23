@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { StopTemplate } from './StopTemplate'
 import useLeftContext from '../hooks/useLeftContext'
+import { Colors, Fonts } from '../utils/constants'
 import type { TContextStop } from '../utils/store'
 
 export const Stops = () => {
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
 
 	lastStop: {
 		fontSize: 24,
-		fontWeight: '500',
+		fontFamily: Fonts.ptRootUi500,
 		lineHeight: 24,
 		paddingLeft: 14.5,
 		backgroundColor: 'white',
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
 	line: {
 		height: '100%',
 		width: 2,
-		backgroundColor: '#d9d9d9',
+		backgroundColor: Colors.lightGrey,
 		position: 'absolute',
 		left: 97,
 		top: 0,

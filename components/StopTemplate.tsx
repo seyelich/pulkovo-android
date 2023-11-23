@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 import { CircleImage } from './icons/CircleImage'
 import useLeftContext from '../hooks/useLeftContext'
+import { Colors, Fonts } from '../utils/constants'
 import type { TContextStop } from '../utils/store'
 
 type TStopTemplate = {
@@ -49,15 +50,15 @@ const styles = StyleSheet.create({
 
 	timeText: {
 		textAlign: 'center',
-		color: 'rgba(64, 57, 57, 1)',
+		color: Colors.darkGreyTime,
 		fontSize: 40,
-		fontWeight: '500',
+		fontFamily: Fonts.ptRootUi500,
 		lineHeight: 32,
 	},
 
 	minute: {
 		fontSize: 24,
-		fontWeight: '400',
+		fontFamily: Fonts.ptRootUi,
 		lineHeight: 18,
 	},
 
@@ -72,26 +73,25 @@ const styles = StyleSheet.create({
 	nameContainer: {
 		width: '100%',
 		height: '100%',
-		boxSizing: 'border-box',
 		padding: 16,
 	},
 
 	name: {
 		fontSize: 32,
-		fontWeight: '500',
+		fontFamily: Fonts.ptRootUi500,
 		lineHeight: 32,
 	},
 
 	nameEng: {
 		fontSize: 24,
-		fontWeight: '500',
+		fontFamily: Fonts.ptRootUi500,
 		lineHeight: 24,
 		marginTop: 4,
 	},
 
 	lastStop: {
 		fontSize: 18,
-		fontWeight: '500',
+		fontFamily: Fonts.ptRootUi500,
 		lineHeight: 18,
 		marginTop: 16,
 	},

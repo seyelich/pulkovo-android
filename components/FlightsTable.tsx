@@ -5,6 +5,7 @@ import { FlightLine } from './FlightLine'
 import { ArrivalDepartureIcon } from './icons/ArrivalDepartureIcon'
 import useRightContext from '../hooks/useRightContext'
 import type { TFlight } from '../types'
+import { Colors, Fonts } from '../utils/constants'
 
 export const FlightTable = () => {
 	const { contents, subtype, duration } = useRightContext().pulkovo
@@ -63,7 +64,7 @@ export const FlightTable = () => {
 const styles = StyleSheet.create({
 	content: {
 		flexDirection: 'column',
-		borderLeftColor: 'rgba(51, 71, 67, 1)',
+		borderLeftColor: Colors.darkGrey,
 		borderLeftWidth: 2,
 		alignSelf: 'flex-start',
 		flex: 1,
@@ -78,17 +79,13 @@ const styles = StyleSheet.create({
 
 	title: {
 		fontSize: 26,
-		fontWeight: '700',
+		fontFamily: Fonts.ptRootUi600,
 		lineHeight: 26,
-		color: 'rgba(51, 71, 67, 1)',
-	},
-
-	text: {
-		color: 'rgba(0, 25, 20, 1)',
+		color: Colors.darkGrey,
 	},
 
 	header: {
-		borderBottomColor: 'rgba(51, 71, 67, 1)',
+		borderBottomColor: Colors.darkGrey,
 		borderBottomWidth: 2,
 		flexDirection: 'row',
 		paddingBottom: 14,
@@ -97,8 +94,8 @@ const styles = StyleSheet.create({
 	headerText: {
 		fontSize: 20,
 		lineHeight: 20,
-		color: 'rgba(51, 71, 67, 1)',
-		fontWeight: '500',
+		color: Colors.darkGrey,
+		fontFamily: Fonts.ptRootUi500,
 		alignSelf: 'flex-end',
 	},
 

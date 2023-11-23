@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 
 import useLeftContext from '../hooks/useLeftContext'
+import { Colors, Fonts } from '../utils/constants'
 
 export const Footer = () => {
 	const { speed, temperature } = useLeftContext()
@@ -46,15 +47,14 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 24,
 		borderRadiusTop: 2,
 		borderRadiusRight: 2,
-		border: '1 solid rgba(209, 209, 209, 1)',
+		border: `1px solid ${Colors.lightGreyBorder}`,
 		gap: 20,
-		color: 'rgba(62, 58, 107, 1)',
-		fontSize: 18,
-		lineHeight: 18,
-		fontWeight: 500,
-		backgroundColor: 'rgba(252, 249, 249, 1)',
+		backgroundColor: Colors.lightGreyBg,
 	},
 	text: {
-		color: 'rgba(62, 58, 107, 1)',
+		color: Colors.purple,
+		fontFamily: Fonts.ptRootUi500,
+		fontSize: 18,
+		lineHeight: 18,
 	},
 })

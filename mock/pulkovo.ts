@@ -1,4 +1,4 @@
-import { pulkovoSubtypes } from '../utils/constants'
+import { pulkovoSubtypes } from '../types'
 
 export const pulkovoMock = {
 	subtype: pulkovoSubtypes.ARRIVAL,

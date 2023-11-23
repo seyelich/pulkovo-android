@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text } from 'react-native'
 
 import type { TFlight } from '../types'
+import { Colors, Fonts } from '../utils/constants'
 
 export const FlightLine = ({ flight }: { flight: TFlight }) => {
 	const setStatusStyle = () => {
@@ -10,15 +11,15 @@ export const FlightLine = ({ flight }: { flight: TFlight }) => {
 
 	return (
 		<View style={styles.row}>
-			<Text style={[styles.textBold, styles.text, styles.time]}>
+			<Text style={[styles.text, styles.textBold, styles.time]}>
 				{flight.time}
 			</Text>
-			<Text style={[styles.textBold, styles.route, styles.text]}>
+			<Text style={[styles.text, styles.textBold, styles.route]}>
 				{flight.flightNumber}
 			</Text>
 			<Text style={[styles.direction, styles.text]}>{flight.direction}</Text>
 			<Text style={[styles.company, styles.text]}>{flight.airline}</Text>
-			<Text style={[styles.textBold, styles.text, styles.aircraftType]}>
+			<Text style={[styles.text, styles.textBold, styles.aircraftType]}>
 				{flight.aircraftType}
 			</Text>
 			<View style={[styles.status, setStatusStyle()]}>
@@ -30,7 +31,7 @@ export const FlightLine = ({ flight }: { flight: TFlight }) => {
 
 const styles = StyleSheet.create({
 	row: {
-		borderBottomColor: 'rgba(217, 217, 217, 1)',
+		borderBottomColor: Colors.lightGrey,
 		borderBottomWidth: 1,
 		flexDirection: 'row',
 		height: 64,
@@ -46,34 +47,33 @@ const styles = StyleSheet.create({
 		lineHeight: 26,
 		display: 'flex',
 		alignItems: 'center',
+		fontFamily: Fonts.ptRootUi500,
 	},
 
 	textBold: {
-		fontWeight: '700',
 		textAlign: 'center',
 		display: 'flex',
 		alignItems: 'center',
+		fontFamily: Fonts.ptRootUi600,
 	},
 
 	route: {
-		backgroundColor: 'rgba(182, 229, 255, 1)',
+		backgroundColor: Colors.blue,
 		marginVertical: 13,
 		marginHorizontal: 8,
 		justifyContent: 'center',
 		width: 104,
-		color: 'rgba(0, 0, 0, 1)',
+		color: Colors.routeBlack,
 		lineHeight: 38,
 	},
 
 	direction: {
 		fontSize: 30,
-		fontWeight: '500',
 		lineHeight: 30,
 		width: 320,
 	},
 
 	company: {
-		fontWeight: '500',
 		width: 160,
 	},
 
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
 
 	statusText: {
 		fontSize: 22,
-		fontWeight: '500',
 		lineHeight: 22,
+		fontFamily: Fonts.ptRootUi500,
 	},
 
 	status: {
@@ -95,11 +95,11 @@ const styles = StyleSheet.create({
 	},
 
 	statusRed: {
-		backgroundColor: '#ffcbcb',
+		backgroundColor: Colors.red,
 	},
 
 	statusGreen: {
-		backgroundColor: '#c9ffd5',
+		backgroundColor: Colors.green,
 	},
 
 	// @media screen and (minWidth: 2782px): {

@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 
 import useLeftContext from '../hooks/useLeftContext'
+import { Colors, Fonts } from '../utils/constants'
 
 export const HeaderForRoute = () => {
 	const { route } = useLeftContext()
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 7,
 		paddingHorizontal: 10,
 		borderBottomWidth: 2,
-		borderBottomColor: '#d9d9d9',
+		borderBottomColor: Colors.lightGrey,
 		gap: 16,
 		boxSizing: 'border-box',
 		backgroundColor: 'inherit',
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
 
 	title: {
 		fontSize: 28,
-		fontWeight: '700',
+		fontFamily: Fonts.ptRootUi600,
 		lineHeight: 42,
 	},
 

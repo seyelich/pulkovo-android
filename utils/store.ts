@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 
-import { pulkovoSubtypes, rightContentTypes } from './constants'
 import { route } from '../mock/route'
+import { pulkovoSubtypes, rightContentTypes } from '../types'
 import type { TFullStop, TMedia, TPulkovo } from '../types'
 
 export type TContextStop = TFullStop & { time: number }

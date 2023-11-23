@@ -5,6 +5,7 @@ import type { SendJsonMessage } from 'react-use-websocket/dist/lib/types'
 import { FlightTable } from './FlightsTable'
 import { MediaContent } from './MediaContent'
 import useRightContext from '../hooks/useRightContext'
+import { Colors } from '../utils/constants'
 
 export const RightBlock = ({
 	sendMessage,
@@ -61,6 +62,8 @@ const styles = StyleSheet.create({
 	imageContainer: {
 		flex: 1,
 		width: '100%',
+		borderLeftColor: Colors.lightGrey,
+		borderLeftWidth: 2,
 	},
 
 	image: {
