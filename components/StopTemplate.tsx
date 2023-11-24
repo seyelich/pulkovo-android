@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 
 import { CircleImage } from './icons/CircleImage'
 import useLeftContext from '../hooks/useLeftContext'
-import { Colors, Fonts, deviceWidth, gap } from '../utils/constants'
+import { Colors, Fonts } from '../utils/constants'
 import type { TContextStop } from '../utils/store'
 
 type TStopTemplate = {
@@ -13,9 +13,27 @@ type TStopTemplate = {
 
 export const StopTemplate = ({ stop, isFinal, isFirst }: TStopTemplate) => {
 	const { route } = useLeftContext()
+	const { width: deviceWidth } = useWindowDimensions()
+
+	const gap = deviceWidth >= 2782 ? 48 : 16
+	const nameTextStyles = {
+		fontSize: deviceWidth >= 2782 ? 48 : 32,
+		lineHeight: deviceWidth >= 2782 ? 48 : 32,
+	}
+
+	const nameEngTextStyles = {
+		lineHeight: deviceWidth >= 2782 ? 32 : 24,
+		fontSize: deviceWidth >= 2782 ? 32 : 24,
+	}
 
 	return (
-		<View style={[styles.stop, isFinal && { marginBottom: 0 }]}>
+		<View
+			style={[
+				styles.stop,
+				isFinal && { marginBottom: 0 },
+				{ marginBottom: gap },
+			]}
+		>
 			<View>
 				<Text style={styles.timeText}>{stop.time}</Text>
 				<Text style={[styles.timeText, styles.minute]}>мин</Text>
@@ -29,10 +47,22 @@ export const StopTemplate = ({ stop, isFinal, isFirst }: TStopTemplate) => {
 					isFirst ? { backgroundColor: route.color } : undefined,
 				]}
 			>
-				<Text style={[styles.name, isFirst && { color: route.fontColor }]}>
+				<Text
+					style={[
+						styles.name,
+						isFirst && { color: route.fontColor },
+						nameTextStyles,
+					]}
+				>
 					{stop.nameRus}
 				</Text>
-				<Text style={[styles.nameEng, isFirst && { color: route.fontColor }]}>
+				<Text
+					style={[
+						styles.nameEng,
+						isFirst && { color: route.fontColor },
+						nameEngTextStyles,
+					]}
+				>
 					{stop.nameEng}
 				</Text>
 				{isFinal && <Text style={styles.lastStop}>Конечная</Text>}
@@ -45,7 +75,6 @@ const styles = StyleSheet.create({
 	stop: {
 		alignItems: 'center',
 		flexDirection: 'row',
-		marginBottom: gap,
 		width: '69%',
 	},
 
@@ -78,15 +107,11 @@ const styles = StyleSheet.create({
 	},
 
 	name: {
-		fontSize: deviceWidth >= 2782 ? 48 : 32,
 		fontFamily: Fonts.ptRootUi500,
-		lineHeight: deviceWidth >= 2782 ? 48 : 32,
 	},
 
 	nameEng: {
-		fontSize: deviceWidth >= 2782 ? 32 : 24,
 		fontFamily: Fonts.ptRootUi500,
-		lineHeight: deviceWidth >= 2782 ? 32 : 24,
 		marginTop: 4,
 	},
 

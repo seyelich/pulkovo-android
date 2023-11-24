@@ -1,15 +1,33 @@
 import { ICONS_URL } from '@env'
-import { StyleSheet, View, Text, FlatList, Image } from 'react-native'
+import {
+	StyleSheet,
+	View,
+	Text,
+	FlatList,
+	Image,
+	useWindowDimensions,
+} from 'react-native'
 
 import useLeftContext from '../hooks/useLeftContext'
 import type { TTransfer } from '../types'
-import { Fonts, deviceWidth } from '../utils/constants'
+import { Fonts } from '../utils/constants'
 
 export const Routes = () => {
 	const { currStop, stops } = useLeftContext()
 	const isLast = currStop?.index === stops.length - 1
+	const { width: deviceWidth } = useWindowDimensions()
 
 	// @TODO: add running line
+
+	const stationTextStyles = {
+		lineHeight: deviceWidth >= 2782 ? 60 : 32,
+		fontSize: deviceWidth >= 2782 ? 60 : 32,
+	}
+
+	const stationEngTextStyles = {
+		fontSize: deviceWidth >= 2782 ? 30 : 16,
+		lineHeight: deviceWidth >= 2782 ? 30 : 16,
+	}
 
 	const renderIcons = (icon: string, index: number) =>
 		index === 0 ? (
@@ -34,11 +52,14 @@ export const Routes = () => {
 				style={[styles.list, el.nameRus ? styles.listMetro : undefined]}
 				data={el.icons}
 				renderItem={({ item, index }) => renderIcons(item, index)}
+				keyExtractor={(_, index) => index.toString()}
 			/>
 			{el.nameRus && (
 				<View>
-					<Text style={styles.station}>{el.nameRus}</Text>
-					<Text style={styles.stationEng}>{el.nameEng}</Text>
+					<Text style={[styles.station, stationTextStyles]}>{el.nameRus}</Text>
+					<Text style={[styles.stationEng, stationEngTextStyles]}>
+						{el.nameEng}
+					</Text>
 				</View>
 			)}
 		</View>
@@ -52,6 +73,7 @@ export const Routes = () => {
 				style={styles.iconsContainer}
 				scrollEnabled={false}
 				renderItem={({ item }) => renderRow(item)}
+				keyExtractor={(_, index) => index.toString()}
 			/>
 		</View>
 	)
@@ -93,15 +115,11 @@ const styles = StyleSheet.create({
 	},
 
 	station: {
-		fontSize: deviceWidth >= 2782 ? 60 : 32,
 		fontFamily: Fonts.ptRootUi600,
-		lineHeight: deviceWidth >= 2782 ? 60 : 32,
 	},
 
 	stationEng: {
-		fontSize: deviceWidth >= 2782 ? 30 : 16,
 		fontFamily: Fonts.ptRootUi500,
-		lineHeight: deviceWidth >= 2782 ? 30 : 16,
 	},
 
 	icon: {

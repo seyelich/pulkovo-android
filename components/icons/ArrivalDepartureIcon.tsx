@@ -1,10 +1,11 @@
+import { useWindowDimensions } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 
 import useRightContext from '../../hooks/useRightContext'
-import { deviceWidth } from '../../utils/constants'
 
 export const ArrivalDepartureIcon = () => {
 	const { subtype } = useRightContext().pulkovo
+	const { width: deviceWidth } = useWindowDimensions()
 
 	return subtype === 'ARRIVAL' ? (
 		<Svg

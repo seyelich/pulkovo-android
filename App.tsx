@@ -1,7 +1,12 @@
 import { ICONS_URL } from '@env'
 import { useFonts } from 'expo-font'
 import { useEffect, useState, useMemo } from 'react'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import {
+	ActivityIndicator,
+	StyleSheet,
+	View,
+	useWindowDimensions,
+} from 'react-native'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 
 import test from './assets/test.jpg'
@@ -22,7 +27,7 @@ import type {
 	TTemp,
 	TWsMessage,
 } from './types'
-import { deviceWidth, socketUrl } from './utils/constants'
+import { socketUrl } from './utils/constants'
 import {
 	LeftContext,
 	RightContext,
@@ -31,8 +36,6 @@ import {
 	PulkovoInitState,
 } from './utils/store'
 import type { TContextStop, TContextMedia, TContextRoute } from './utils/store'
-
-console.log(ICONS_URL)
 
 const App = () => {
 	const [allStops, setAllStops] = useState<TFullStop[]>([])
@@ -48,6 +51,7 @@ const App = () => {
 	const [type, setType] = useState<'media' | 'pulkovo'>('media')
 
 	const [isLoading, setIsLoading] = useState(false)
+	const { width: deviceWidth } = useWindowDimensions()
 
 	useFonts({
 		'pt-root-ui': require('./assets/fonts/PT-Root-UI/pt-root-ui_regular.ttf'),
@@ -238,7 +242,13 @@ const App = () => {
 	// }, [lastJsonMessage])
 
 	return (
-		<View style={[styles.app, isLoading && styles.appOnLoading]}>
+		<View
+			style={[
+				styles.app,
+				isLoading && styles.appOnLoading,
+				{ height: deviceWidth > 1920 ? 768 : 540 },
+			]}
+		>
 			{isLoading ? (
 				<ActivityIndicator size="large" />
 			) : (
@@ -258,7 +268,6 @@ const App = () => {
 const styles = StyleSheet.create({
 	app: {
 		width: '100%',
-		height: deviceWidth > 1920 ? 768 : 540, //delete when prod
 		minWidth: 1920,
 		marginVertical: 0,
 		marginHorizontal: 'auto',

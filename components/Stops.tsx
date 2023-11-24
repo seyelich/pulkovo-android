@@ -1,14 +1,21 @@
 import { LinearGradient } from 'expo-linear-gradient'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import {
+	FlatList,
+	StyleSheet,
+	Text,
+	View,
+	useWindowDimensions,
+} from 'react-native'
 
 import { StopTemplate } from './StopTemplate'
 import useLeftContext from '../hooks/useLeftContext'
-import { Colors, Fonts, deviceWidth, gap } from '../utils/constants'
+import { Colors, Fonts } from '../utils/constants'
 import type { TContextStop } from '../utils/store'
 
 export const Stops = () => {
 	const { stops, currStop } = useLeftContext()
 	const index = stops.length >= 4 ? 0 : stops.length
+	const { width: deviceWidth } = useWindowDimensions()
 
 	const renderItem = (item: TContextStop, i: number) => {
 		if (
@@ -31,13 +38,21 @@ export const Stops = () => {
 		}
 	}
 
+	const gap = deviceWidth >= 2782 ? 48 : 16
+
 	return (
 		<View>
 			<FlatList
-				style={styles.stops}
+				style={[
+					styles.stops,
+					{
+						paddingBottom: deviceWidth >= 2782 ? 32 : 18,
+					},
+				]}
 				scrollEnabled={false}
 				data={stops}
 				renderItem={({ item, index }) => renderItem(item, index)}
+				keyExtractor={(_, index) => index.toString()}
 			/>
 			{stops.length < 4 || !!currStop ? (
 				<View
@@ -66,7 +81,6 @@ const styles = StyleSheet.create({
 	stops: {
 		margin: 0,
 		paddingHorizontal: 17.5,
-		paddingBottom: deviceWidth >= 2782 ? 32 : 18,
 		paddingTop: 16,
 		flexDirection: 'column',
 		flex: 1,

@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native'
 
 import useLeftContext from '../hooks/useLeftContext'
 import { Colors, Fonts } from '../utils/constants'
 
 export const Footer = () => {
 	const { speed, temperature } = useLeftContext()
+	const { width: deviceWidth } = useWindowDimensions()
 
 	const getTime = () => {
 		const date = new Date()
@@ -23,13 +24,22 @@ export const Footer = () => {
 		}
 	}
 
+	const textStyles = {
+		fontSize: deviceWidth >= 2782 ? 32 : 18,
+		lineHeight: deviceWidth >= 2782 ? 32 : 18,
+	}
+
 	return (
 		<View style={styles.footer}>
-			<Text style={styles.text}>{getTime().time}</Text>
-			<Text style={styles.text}>{getTime().date}</Text>
-			{temperature !== 0 && <Text style={styles.text}>{temperature}°C</Text>}
+			<Text style={[styles.text, textStyles]}>{getTime().time}</Text>
+			<Text style={[styles.text, textStyles]}>{getTime().date}</Text>
+			{temperature !== 0 && (
+				<Text style={[styles.text, textStyles]}>{temperature}°C</Text>
+			)}
 			{/* не показывается, т.к. пакет TEMPERATURE не приходит с бэка*/}
-			{speed !== 0 && <Text style={styles.text}>{speed} км/ч</Text>}
+			{speed !== 0 && (
+				<Text style={[styles.text, textStyles]}>{speed} км/ч</Text>
+			)}
 		</View>
 	)
 }
@@ -54,7 +64,5 @@ const styles = StyleSheet.create({
 	text: {
 		color: Colors.purple,
 		fontFamily: Fonts.ptRootUi500,
-		fontSize: 18,
-		lineHeight: 18,
 	},
 })

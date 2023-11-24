@@ -1,29 +1,49 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, useWindowDimensions } from 'react-native'
 
 import type { TFlight } from '../types'
-import { Colors, Fonts, deviceWidth } from '../utils/constants'
+import { Colors, Fonts } from '../utils/constants'
 
 export const FlightLine = ({ flight }: { flight: TFlight }) => {
+	const { width: deviceWidth } = useWindowDimensions()
+
 	const setStatusStyle = () => {
 		if (flight.status.includes('Задерживается')) return styles.statusRed
 		else if (flight.status.includes('Прибыл')) return styles.statusGreen
 	}
 
+	const textStyles = {
+		fontSize: deviceWidth >= 2782 ? 48 : 26,
+		lineHeight: deviceWidth >= 2782 ? 48 : 26,
+	}
+
+	const statusTextStyles = {
+		fontSize: deviceWidth >= 2782 ? 40 : 22,
+		lineHeight: deviceWidth >= 2782 ? 40 : 22,
+	}
+
 	return (
-		<View style={styles.row}>
-			<Text style={[styles.text, styles.textBold, styles.time]}>
+		<View style={[styles.row, { height: deviceWidth >= 2782 ? 105 : 64 }]}>
+			<Text style={[styles.text, styles.textBold, styles.time, textStyles]}>
 				{flight.time}
 			</Text>
-			<Text style={[styles.text, styles.textBold, styles.route]}>
+			<Text style={[styles.text, styles.textBold, styles.route, textStyles]}>
 				{flight.flightNumber}
 			</Text>
-			<Text style={[styles.direction, styles.text]}>{flight.direction}</Text>
-			<Text style={[styles.company, styles.text]}>{flight.airline}</Text>
-			<Text style={[styles.text, styles.textBold, styles.aircraftType]}>
+			<Text style={[styles.direction, styles.text, textStyles]}>
+				{flight.direction}
+			</Text>
+			<Text style={[styles.company, styles.text, textStyles]}>
+				{flight.airline}
+			</Text>
+			<Text
+				style={[styles.text, styles.textBold, styles.aircraftType, textStyles]}
+			>
 				{flight.aircraftType}
 			</Text>
 			<View style={[styles.status, setStatusStyle()]}>
-				<Text style={styles.statusText}>{flight.status}</Text>
+				<Text style={[styles.statusText, statusTextStyles]}>
+					{flight.status}
+				</Text>
 			</View>
 		</View>
 	)
@@ -34,7 +54,6 @@ const styles = StyleSheet.create({
 		borderBottomColor: Colors.lightGrey,
 		borderBottomWidth: 1,
 		flexDirection: 'row',
-		height: deviceWidth >= 2782 ? 105 : 64,
 		// justifyContent: deviceWidth >= 2782 ? 'space-between' : 'flex-start',
 	},
 
@@ -44,8 +63,6 @@ const styles = StyleSheet.create({
 	},
 
 	text: {
-		fontSize: deviceWidth >= 2782 ? 48 : 26,
-		lineHeight: deviceWidth >= 2782 ? 48 : 26,
 		display: 'flex',
 		alignItems: 'center',
 		fontFamily: Fonts.ptRootUi500,
@@ -72,23 +89,21 @@ const styles = StyleSheet.create({
 		fontSize: 30,
 		lineHeight: 30,
 		minWidth: 320,
-		marginLeft: deviceWidth >= 2782 ? 10 : 0,
+		// marginLeft: deviceWidth >= 2782 ? 10 : 0,
 	},
 
 	company: {
 		minWidth: 160,
-		marginLeft: deviceWidth >= 2782 ? 50 : 0,
+		// marginLeft: deviceWidth >= 2782 ? 50 : 0,
 	},
 
 	aircraftType: {
 		minWidth: 100,
 		justifyContent: 'center',
-		marginLeft: deviceWidth >= 2782 ? 90 : 0,
+		// marginLeft: deviceWidth >= 2782 ? 90 : 0,
 	},
 
 	statusText: {
-		fontSize: deviceWidth >= 2782 ? 40 : 22,
-		lineHeight: deviceWidth >= 2782 ? 40 : 22,
 		fontFamily: Fonts.ptRootUi500,
 	},
 
@@ -96,7 +111,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		paddingHorizontal: 8,
-		marginLeft: deviceWidth >= 2782 ? 50 : 0,
+		// marginLeft: deviceWidth >= 2782 ? 50 : 0,
 	},
 
 	statusRed: {

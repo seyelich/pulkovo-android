@@ -1,15 +1,22 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import {
+	StyleSheet,
+	View,
+	Text,
+	useWindowDimensions,
+	FlatList,
+} from 'react-native'
 
 import { FlightLine } from './FlightLine'
 import { ArrivalDepartureIcon } from './icons/ArrivalDepartureIcon'
 import useRightContext from '../hooks/useRightContext'
 import type { TFlight } from '../types'
-import { Colors, Fonts, deviceWidth } from '../utils/constants'
+import { Colors, Fonts } from '../utils/constants'
 
 export const FlightTable = () => {
 	const { contents, subtype, duration } = useRightContext().pulkovo
 	const [chunkNumber, setChunkNumber] = useState(0)
+	const { width: deviceWidth } = useWindowDimensions()
 
 	const flightLength = contents?.length
 	const chunkSize = 7
@@ -37,25 +44,66 @@ export const FlightTable = () => {
 		return () => clearTimeout(timer)
 	}, [tableShowDuration])
 
+	const headerTextStyles = {
+		fontSize: deviceWidth >= 2782 ? 32 : 20,
+		lineHeight: deviceWidth >= 2782 ? 32 : 20,
+	}
+
 	return (
 		<View style={styles.content}>
 			<View style={styles.titleContainer}>
 				<ArrivalDepartureIcon />
-				<Text style={styles.title}>
+				<Text
+					style={[styles.title, { fontSize: deviceWidth >= 2782 ? 52 : 26 }]}
+				>
 					{subtype === 'ARRIVAL' ? 'Прилёты' : 'Вылеты'}
 				</Text>
 			</View>
 			<View>
-				<View style={styles.header}>
-					<Text style={[styles.time, styles.headerText]}>Время</Text>
-					<Text style={[styles.route, styles.headerText]}>Рейс</Text>
-					<Text style={[styles.direction, styles.headerText]}>Направление</Text>
-					<Text style={[styles.company, styles.headerText]}>Авиакомпания</Text>
-					<Text style={[styles.plane, styles.headerText]}>Тип самолета</Text>
-					<Text style={[styles.status, styles.headerText]}>Статус</Text>
+				<View
+					style={[
+						styles.header,
+						{
+							justifyContent:
+								deviceWidth >= 2782 ? 'space-around' : 'flex-start',
+						},
+					]}
+				>
+					<Text style={[styles.time, styles.headerText, headerTextStyles]}>
+						Время
+					</Text>
+					<Text style={[styles.route, styles.headerText, headerTextStyles]}>
+						Рейс
+					</Text>
+					<Text style={[styles.direction, styles.headerText, headerTextStyles]}>
+						Направление
+					</Text>
+					<Text style={[styles.company, styles.headerText, headerTextStyles]}>
+						Авиакомпания
+					</Text>
+					<Text
+						style={[
+							styles.plane,
+							styles.headerText,
+							headerTextStyles,
+							{
+								width: deviceWidth >= 2782 ? 150 : 100,
+							},
+						]}
+					>
+						Тип самолета
+					</Text>
+					<Text style={[styles.status, styles.headerText, headerTextStyles]}>
+						Статус
+					</Text>
 				</View>
-				{currTable &&
-					currTable.map((el, i) => <FlightLine flight={el} key={i} />)}
+				{currTable && (
+					<FlatList
+						data={currTable}
+						renderItem={({ item }) => <FlightLine flight={item} />}
+						keyExtractor={(_, index) => index.toString()}
+					/>
+				)}
 			</View>
 		</View>
 	)
@@ -79,7 +127,6 @@ const styles = StyleSheet.create({
 	},
 
 	title: {
-		fontSize: deviceWidth >= 2782 ? 52 : 26,
 		fontFamily: Fonts.ptRootUi600,
 		lineHeight: 26,
 		color: Colors.darkGrey,
@@ -90,12 +137,9 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 2,
 		flexDirection: 'row',
 		paddingBottom: 14,
-		justifyContent: deviceWidth >= 2782 ? 'space-around' : 'flex-start',
 	},
 
 	headerText: {
-		fontSize: deviceWidth >= 2782 ? 32 : 20,
-		lineHeight: deviceWidth >= 2782 ? 32 : 20,
 		color: Colors.darkGrey,
 		fontFamily: Fonts.ptRootUi500,
 		alignSelf: 'flex-end',
@@ -117,13 +161,12 @@ const styles = StyleSheet.create({
 
 	company: {
 		minWidth: 160,
-		marginLeft: deviceWidth >= 2782 ? -100 : 0,
+		// marginLeft: deviceWidth >= 2782 ? -100 : 0,
 	},
 
 	plane: {
-		width: deviceWidth >= 2782 ? 150 : 100,
 		textAlign: 'center',
-		marginLeft: deviceWidth >= 2782 ? -25 : 0,
+		// marginLeft: deviceWidth >= 2782 ? -25 : 0,
 	},
 
 	status: {
